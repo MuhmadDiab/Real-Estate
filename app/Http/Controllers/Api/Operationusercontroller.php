@@ -19,8 +19,9 @@ class Operationusercontroller extends BaseController
     }
     else{
         $estate = $estate->with('photo')->get()->all();
+        return $this->sendResponse2($estate,'this is all Estates');
     }
-    return $this->sendResponse2($estate,'this is all Estates');
+
   }
   ////////likeeeeeeeeeeeeeee
   public function like(Request $request,$estate_id)
