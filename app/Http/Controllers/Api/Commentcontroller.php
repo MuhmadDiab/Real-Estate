@@ -59,7 +59,7 @@ class Commentcontroller extends BaseController
         'user_id'=>$request->user()->id
       ]);
     }
-   $estate =Estate::where('id',$estate_id)->withCount('comment','view','like')->with('comment','photo')->first();
+    $estate =Estate::where('id',$estate_id)->withCount('comment','view','like')->with('comment','user','photo')->first();
     return $this->sendResponse2($estate,'successfully');
   }
   public function searsh()

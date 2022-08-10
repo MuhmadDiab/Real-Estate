@@ -17,7 +17,9 @@ class Operationusercontroller extends BaseController
     {
       return $this->senderrors("not found Estates");
     }
-    else{
+    else
+    {
+        
         $estate = $estate->withcount('like','comment','view')->with('comment','photo')->get();
         return $this->sendResponse2($estate,'this is all Estates');
     }
