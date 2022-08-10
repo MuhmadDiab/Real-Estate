@@ -60,6 +60,7 @@ class EstateController extends BaseController
     $photo= new Photo();
     $photo->photo= $request->photo;
     $photo->estate_id= $Estate->id;
+    $photo->save();
     return $this->sendResponse2($Estate,'the Estate created succeflly');
   }
   public function updateEstate(Request $request ,$id)
