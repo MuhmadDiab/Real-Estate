@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class EstateController extends BaseController
 {
   /**
-  * 
+  *
   *
   * @return void
   */
@@ -61,7 +61,7 @@ class EstateController extends BaseController
     $photo->photo= $request->photo;
     $photo->estate_id= $Estate->id;
     return $this->sendResponse2($Estate,'the Estate created succeflly');
-  }  
+  }
   public function updateEstate(Request $request ,$id)
   {
     $validator = Validator::make($request->all(),
@@ -85,6 +85,7 @@ class EstateController extends BaseController
     ]);
     return $this->sendResponse2($estate,'the Estate created succeflly');
   }
+
   public function deletEstate($id)
   {
     $estate =Estate::find($id);
@@ -95,12 +96,26 @@ class EstateController extends BaseController
     $estate->delete();
    return $this->sendResponse2($estate , 'the Estate deleted succeflly');
   }
+
   public function Addphoto (Request $request)
   {
     $validator = Validator::make($request->all(),
     [
       'imag'=>'required',
     ]);
+    // $images = $request->list_images;
+    // $input = [];
+    // $i1 = 0; $i2 = 0;
+    // foreach($images as $image2) {
+    //     $image1 = $image2['image'];
+    //     $image_name = time().$image1->getClientOriginalName();
+    //     $image1->move(public_path('upload'),$image_name);
+    //     $path = "public/upload/$image_name";
+    //     $input[$i1] = $path;
+    //     $i1++;
+    // }
+//    return $input;
+  //  return "OK";
     if($validator->fails())
     {
       return $this->sendError('Please validate error',$validator->errors);
@@ -114,5 +129,18 @@ class EstateController extends BaseController
       'imag' => $path,
     ]);
     return $this->sendResponse2($photo,'this is all estate');
+  }
+  public function getEstate(Request $request , $id)
+  {
+    $user = Estate::where('user_id',$id)->first();
+    if(!$user)
+    {
+        return $this->senderrors('masseg fulse');
+    }
+    else
+    {
+        $user = $user->withcount('like','view','comment')->with('photo')->get();
+        return $this->sendResponse2($user,'this is all estate');
+    }
   }
 }
