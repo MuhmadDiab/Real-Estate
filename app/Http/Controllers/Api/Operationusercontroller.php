@@ -12,12 +12,15 @@ class Operationusercontroller extends BaseController
 {
   public function listallEstate()
   {
-    $estate = Estate::with('photo')->get()->all();
+    $estate = Estate::first();
     if(!$estate)
     {
       return $this->senderrors("not found Estates");
     }
-     return $this->sendResponse2($estate,'this is all Estates');
+    else{
+        $estate = $estate->with('photo')->get()->all();
+    }
+    return $this->sendResponse2($estate,'this is all Estates');
   }
   ////////likeeeeeeeeeeeeeee
   public function like(Request $request,$estate_id)
